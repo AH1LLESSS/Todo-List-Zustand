@@ -1,66 +1,83 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import type { Todo, TodoListType } from './types';
 
 
-interface TodoListType{
-    Todos: Todo[];
-    addTodo: (todoData: Todo) => void;
-    deleteTodos: () => void;
-    removeTodo: (id : number) => void
-}
 
-interface Todo{
-    id: number,
-    text: string,
-    name: string,
-    prioritet: number,
-    comment?: string,
-    bordercolora: string,
-    textColor: string
-}
 
 
 export const useTodoList = create<TodoListType>()(
     persist(
         (set,get)=>({
-        Todos: [],
-        addTodo: (todoData : Todo) =>{
+        todos: [],
         
-        if (!todoData.text.trim()){
-            console.log("Что ты мне прислал чурка")
-            return
-        }
-        if (!todoData){
-            console.log("Где то что ты мне прислал чурка")
-            return
-        }
+            formText: '',
+            formPrioritet: undefined,
+            formComment: '',
+            formBorderColor: 'rgb(160, 72, 0)',
+            formTextColor: 'rgb(145, 145, 145)',
+            formName: '',
+            formTargetColor: 'border',
+            formColorsettingsopen: false,
         
-        if (!todoData.name.trim()){
-            console.log("Где то что ты мне прислал чурка")
-            return
-        }
+            setFormText: (text) => set({ formText: text }),
+            setFormPrioritet: (prioritet) => set({ formPrioritet: prioritet }),
+            setFormComment: (comment) => set({ formComment: comment }),
+            setFormBorderColor: (color) => set({ formBorderColor: color }),
+            setFormTextColor: (color) => set({ formTextColor: color }),
+            setFormName: (name) => set({ formName: name }),
+            setFormTargetColor: (target) => set({ formTargetColor: target }),
+            setFormColorsettingsopen: (open) => set({ formColorsettingsopen: open }),
+        
+            addTodo: () => {
+                const state = get(); 
+                const { formText, formName, formPrioritet, formComment, formBorderColor, formTextColor } = state;
+        
+                if (!formText.trim() || !formName.trim()) {
+                    console.log('Заполните обязательные поля');
+                    return;
+                }
 
+        
+                const newTodo: Todo = {
+                    id: Date.now(),
+                    text: formText.trim(),
+                    name: formName.trim(),
+                    prioritet: formPrioritet ?? 1,
+                    comment: formComment.trim(),
+                    bordercolora: formBorderColor,
+                    textColor: formTextColor,
+                };
+        
+        
+        
         set((state)=>({
-          Todos:
-          [...state.Todos, todoData]
+          todos:
+          [...state.todos, newTodo]
         }
         
-        ))},
+        ))
         
-        deleteTodos: () =>{
-            set({Todos: []})
+        get().resetForm();
         },
-        removeTodo:(id) =>{
-            set((state)=>({
-                Todos:
-               state.Todos.filter(todo=> todo.id !== id)
-            }))
-        }
-    
+        
+        deleteTodos: () => set({ todos: [] }),
+        removeTodo: (id) => set((state) => ({
+           todos: state.todos.filter(todo => todo.id !== id)
+        })),
+        
+        resetForm: () => set({
+            formText: '',
+            formPrioritet: undefined,
+            formComment: '',
+            formBorderColor: 'rgb(160, 72, 0)',
+            formTextColor: 'rgb(145, 145, 145)',
+            formName: '',
+        }),
        
     
     }),
-    { name: 'todo-storage' }
+    { name: 'todo-storage',  partialize: (state) => ({ todos: state.todos })}
     ) 
 )
 

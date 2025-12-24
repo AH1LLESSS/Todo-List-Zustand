@@ -1,13 +1,14 @@
 import { useTodoList } from "../Logic/Brains";
-import { useLogicTodo } from "../Logic/Logical"
 import { useMemo } from "react";
 import { Buttona, Buttong, TodoItemSection } from "./styledComp";
 import {  TodoItemClass, TodoInputMenuClassg } from "./clsx";
+import type { TodoItemProps } from "../Logic/types";
+
 
 
 //Лист
 export function TodoListPush() {
-    const todos = useTodoList(state=> state.Todos);
+    const todos = useTodoList(state=> state.todos);
     const deleteTodos = useTodoList(state=>state.deleteTodos);
     
    
@@ -23,7 +24,7 @@ export function TodoListPush() {
           <p>Привет, сделай свою первую задачу</p>) :  (
             
             SortTodos.map(todo=>(
-            <TodoItem key={todo.id}  todoData={todo}/>)
+            <TodoItem key={todo.id} todoData={todo}/>)
            )
          )
             }
@@ -35,133 +36,139 @@ export function TodoListPush() {
 
 
 
-interface SettingsPanelProps {
-    prioritet: number | undefined;
-    setPrioritet: (val: number | undefined) => void;
-    targetColor: "border" | "text",
-    setTargetColor: (color: "border" | "text") =>void,
-    Colorsettingsopen: boolean,
-    setColorsettingsopen: (Colorsettingsopen: boolean) => void,
-    bordercolora: string,
-    textColor: string
-}
+
 
 //Доп настройки
-function SettingsPanel({ prioritet, setPrioritet, setTargetColor,
-Colorsettingsopen, setColorsettingsopen, textColor, bordercolora }: SettingsPanelProps){
-   
-  
+function SettingsPanel() {
+    const {
+        formPrioritet,
+        formBorderColor,
+        formTextColor,
+        formColorsettingsopen,
+        setFormPrioritet,
+        setFormTargetColor,
+        setFormColorsettingsopen
+    } = useTodoList();
     
-  return(
-         
-         <section className="SettingsPanel">
-         <button onClick={()=> {
-            setColorsettingsopen(!Colorsettingsopen)
-            setTargetColor("border")}}
-             style={{
-              textDecoration: 'none',
-              border: `0.4vh solid ${bordercolora}`
-             }}>Цвет границы</button>
-         <button onClick={()=>{
-            setColorsettingsopen(!Colorsettingsopen)
-            setTargetColor("text")}} style={{
-              textDecoration: 'none',
-              border: `0.4vh solid ${textColor}`
-            }}>Цвет текста</button>
-         <input type="number" placeholder="Введите приоритет" value={prioritet ?? ""}
-           onChange={(e) => {
-            setPrioritet(e.target.value === "" ? undefined : Number(e.target.value))}
-            }/>
-          
-         </section>
-         
-    )
-
-
+    return (
+        <section className="SettingsPanel">
+            <button 
+                onClick={() => {
+                    setFormColorsettingsopen(!formColorsettingsopen);
+                    setFormTargetColor("border");
+                }}
+                style={{
+                    textDecoration: 'none',
+                    border: `0.4vh solid ${formBorderColor}`
+                }}
+            >
+                Цвет границы
+            </button>
+            
+            <button 
+                onClick={() => {
+                    setFormColorsettingsopen(!formColorsettingsopen);
+                    setFormTargetColor("text");
+                }}
+                style={{
+                    textDecoration: 'none',
+                    border: `0.4vh solid ${formTextColor}`
+                }}
+            >
+                Цвет текста
+            </button>
+            
+            <input 
+                type="number" 
+                placeholder="Введите приоритет" 
+                value={formPrioritet ?? ""}
+                onChange={(e) => {
+                    setFormPrioritet(e.target.value === "" ? undefined : Number(e.target.value));
+                }}
+            />
+        </section>
+    );
 }
 
 //Панель целиком
-export function TodoListInputMenu(){
-  
-    const {comment, setComment, text, setText, NewTodo, name, setName,
-        prioritet, setPrioritet,setBorderColor,textColor,setTextColor,
-        targetColor, setTargetColor,Colorsettingsopen, setColorsettingsopen, bordercolora
-       } = useLogicTodo();
-
+export function TodoListInputMenu() {
     
-      const TodoInputMenuClass = TodoInputMenuClassg(Colorsettingsopen);
-       
-      return(
-      <>
-     <form className={TodoInputMenuClass} onSubmit={(e)=> e.preventDefault()}
-     >
-        <textarea placeholder="Введите текст  задачи" className="Inputtextarea" value={text ?? ""} onChange={
-            (e)=>{  
-            setText(String(e.target.value))
-        }}/>
-        <SettingsPanel
-         prioritet={prioritet}
-        setPrioritet={setPrioritet} 
-        targetColor={targetColor}
-        setTargetColor={setTargetColor}
-        Colorsettingsopen={Colorsettingsopen}
-        setColorsettingsopen={setColorsettingsopen}
-        bordercolora={bordercolora}
-        textColor={textColor}
-        />
-       { Colorsettingsopen && 
-        <ColorPickers    
-        setBorderColor={setBorderColor}
-        textColor={textColor}
-        setTextColor={setTextColor}
-        targetColor={targetColor}
-        setTargetColor={setTargetColor}/>  } 
-        
-         
-        <input placeholder="Введите свой коментарий" className="InputComent" value={comment ?? ""} onChange={
-            (e)=>{
-            setComment(String(e.target.value))
-            }} />
-            <input placeholder="Введите название задачи" className="InputNick" value={name ?? ""} onChange={
-                (e)=>{
-            setName(String(e.target.value))
-            }} />
-        <button className="CreateBTN" onClick={NewTodo}  type="submit">Создать</button>
-        
+   
+    const {
+        formText,
+        formComment,
+        formName,
+        formColorsettingsopen,
+        setFormText,
+        setFormComment,
+        setFormName,
+        addTodo
+    } = useTodoList();
 
- 
-       </form>
-       
-    </>    
-)
+    const TodoInputMenuClass = TodoInputMenuClassg(formColorsettingsopen);
+   
+    const handleSubmit = (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
+        addTodo();
+    };
+
+    return (
+        <>
+            <form 
+                className={TodoInputMenuClass} 
+                onSubmit={handleSubmit}
+            >
+                <textarea 
+                    placeholder="Введите текст задачи" 
+                    className="Inputtextarea" 
+                    value={formText} 
+                    onChange={(e) => setFormText(e.target.value)}
+                />
+                
+                <SettingsPanel/>
+                
+                {formColorsettingsopen && (
+                    <ColorPickers
+                    />
+                )}
+                
+                <input 
+                    placeholder="Введите свой комментарий" 
+                    className="InputComent" 
+                    value={formComment} 
+                    onChange={(e) => setFormComment(e.target.value)}
+                />
+                
+                <input 
+                    placeholder="Введите название задачи" 
+                    className="InputNick" 
+                    value={formName} 
+                    onChange={(e) => setFormName(e.target.value)}
+                />
+                
+                <button className="CreateBTN" type="submit">
+                    Создать
+                </button>
+            </form>
+        </>
+    );
 }
 
 
 
+
    
    
    
    
-interface  TodoItemProps{
-    todoData: {
-        id: number,
-        name: string,
-        text: string,
-        prioritet: number,
-        comment?: string,
-        bordercolora: string,
-        textColor: string
-    }
-   
-    
-}
+
 
 
 
 
 function TodoItem({todoData} : TodoItemProps){
   const removeTodo = useTodoList(state=> state.removeTodo);
-      
+  
   
    
   
@@ -189,53 +196,44 @@ function TodoItem({todoData} : TodoItemProps){
 
 }
 
-interface ColorPickerstype{
- setBorderColor: (color: string) => void,
- textColor: string ,
- setTextColor:(color: string) => void
- targetColor: string,
- setTargetColor: (color:  "border" | "text" ) =>void,
 
-}
 
-export function ColorPickers({setBorderColor, setTextColor, targetColor
-}: ColorPickerstype ) {
+export function ColorPickers() {
+  const {
+      formTargetColor,
+      setFormBorderColor,
+      setFormTextColor
+  } = useTodoList();
 
-    const setColor = targetColor === "border" ? setBorderColor : setTextColor
+  const setColor = formTargetColor === "border" ? setFormBorderColor : setFormTextColor;
 
-    const BTN_COLORS =[
-        { name: 'черный', value: 'rgb(0, 0, 0)' },
-        { name: 'красный', value: 'rgb(66, 0, 0)' },
-        { name: 'синий', value: 'rgb(0, 0, 255)' },
-        { name: 'голубой', value: 'rgb(0, 255, 255)' },
-        { name: 'зелёный', value: 'rgb(0, 128, 0)' },
-        { name: 'фиолетовый', value: 'rgb(128, 0, 128)' },
-    ]
-
-     
-     
-    
-    
-    
-    return ( 
-        <>
-        <div className="ColorSettings">
+  const BTN_COLORS = [
+      { name: 'черный', value: 'rgb(0, 0, 0)' },
+      { name: 'красный', value: 'rgb(66, 0, 0)' },
+      { name: 'синий', value: 'rgb(0, 0, 255)' },
+      { name: 'голубой', value: 'rgb(0, 255, 255)' },
+      { name: 'зелёный', value: 'rgb(0, 128, 0)' },
+      { name: 'фиолетовый', value: 'rgb(128, 0, 128)' },
+  ];
+  
+  return ( 
+      <div className="ColorSettings">
           {BTN_COLORS.map(color => (
-            <Buttona style={{
-                borderColor: color.value,
-                color: color.value
-            }}
-              key={color.value}
-              onClick={() => setColor(color.value)}
-              $bordercolor={color.value}
-            >{color.name}</Buttona>
+              <Buttona 
+                  key={color.value}
+                  onClick={() => setColor(color.value)}
+                  style={{
+                      borderColor: color.value,
+                      color: color.value
+                  }}
+                  $bordercolor={color.value}
+              >
+                  {color.name}
+              </Buttona>
           ))}
-        </div>
-        </>
-    )  
+      </div>
+  );
 }
-
-
 
 
 

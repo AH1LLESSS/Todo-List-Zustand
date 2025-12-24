@@ -8,9 +8,9 @@ export const TodoItemClass =clsx(
 
 
 
-export const TodoInputMenuClassg = (Colorsettingsopen: boolean) => clsx(
+export const TodoInputMenuClassg = ( formColorsettingsopen: boolean) => clsx(
     'InputMenu',
-    Colorsettingsopen  && 'Enter'
+    formColorsettingsopen  && 'Enter'
 )
 
 
