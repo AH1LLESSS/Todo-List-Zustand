@@ -1,0 +1,22 @@
+
+%Border{
+    border: 0.2vw solid  rgb(83, 83, 0);
+    border-radius: 10%;
+}
+
+$PrimaryBC: #2c2c2c ;
+$INPUTBC: #1a1a1a;
+$BasePDBTN: 3%;
+
+
+%PushBorder{
+    border: 0.15vw solid rgb(83, 83, 0);
+    border-radius: 10%;
+}
+
+%TextShadow{
+    text-shadow: 0 0 0.6vh rgb(107, 107, 107);
+    &:hover{
+        text-shadow: 0 0 1vh rgb(255, 255, 255);
+    }
+}

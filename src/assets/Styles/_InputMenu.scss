@@ -1,0 +1,207 @@
+@import './Mixins';
+@import './Variable';
+
+.InputMenu{
+ @include Background-Gradient(rgb(0, 0, 0), rgb(31, 31, 31), rgb(36, 32, 32));
+ position: relative;
+ top:10vh;
+ display: block;
+ width: 40%;
+ max-width: auto;
+ height: auto ;
+ @extend %Border;
+ animation: InputMenu 3s ease forwards ;
+
+ 
+        textarea, input{
+            text-align: left;
+            
+        }
+         
+        
+
+        &.Enter {
+            border-color: rgb(43, 43, 15) !important;
+            filter: none !important;
+            pointer-events: none;
+            
+            & > *:not(.ColorSettings) {
+                opacity: 0.6;
+            }
+            
+            &:hover {
+                border-color: none !important;
+                filter: none !important;
+            }
+        }
+
+        &:hover{
+            border-color: rgb(189, 189, 0);
+            filter: drop-shadow(0 0 1vh rgb(189, 189, 0));
+         }
+ 
+        .Inputtextarea{
+        @include Background-Gradient(rgb(20,20,20), rgb(22,22,22),rgb(24,24,24));
+        position: relative;
+        margin-top: 2%;
+        width: 85% ;
+        padding: 1.8%;
+        font-size: 1.1rem;
+        border: 0.2vh solid rgb(66, 0, 0) ;
+        
+
+        &:hover{
+            border-color: rgb(184, 0, 0);
+        }
+     }
+
+     .SettingsPanel{
+        position: relative;
+        margin-top: 1%;
+        margin-bottom: 1%;
+        margin-right: 5%;
+        margin-left: 5%;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        button{
+            position: relative;
+            padding: $BasePDBTN;
+            background-color: $PrimaryBC;
+            transition: 0.2s ease;
+            pointer-events: auto;
+          &:hover{
+            border-color: rgb(219, 117, 0);
+            padding: calc($BasePDBTN * 1.2);
+          }
+        }
+     
+        input{
+            background-color: $INPUTBC;
+            position: relative;
+            border: 0.1vh solid rgb(0, 3, 160) ;
+            
+            &:hover{
+                border-color: rgb(0, 3, 202);
+            }
+        }
+    
+    
+    
+    
+    
+    }
+
+      .InputComent{
+        position: relative;
+        right: 5%;
+        margin-bottom: 2%;
+        background-color: #272727;
+        padding: 2%;
+        width: 30%;
+        border: 0.2vh solid rgb(0, 90, 0) ;
+      
+           &:hover{
+                border-color: rgb(0, 184, 0);
+           }
+    }
+
+     .CreateBTN{
+        position: relative;
+        background-color: $PrimaryBC;
+        border: 0.2vh solid rgb(85, 0, 85) ;
+        padding: 2%;
+        left: 5%;
+        font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        transition: 0.4s ease;
+        &:hover{
+            padding: 3%;
+            border-color: rgb(216, 0, 216) ;
+        }
+    }
+
+     .InputNick{
+        position: relative;
+        margin-bottom: 2%;
+        background-color: #272727;
+        padding: 2%;
+        width: 24%;
+        border: 0.2vh solid rgb(0, 65, 90) ;
+      
+           &:hover{
+                border-color: rgb(0, 163, 204);
+           }
+     }
+
+
+
+    .ColorSettings{
+       position: absolute;
+       bottom: 1.5vh ;
+       right: 44vw;
+       min-width: 20%;
+       width: auto;
+       opacity: 1;
+       pointer-events: auto;
+       display: flex;
+       justify-content: left;
+       flex-direction: column;
+       height: auto;
+       @include Background-Gradient(rgb(65, 0, 0), rgb(12, 12, 12), rgb(12, 12, 12));
+       border: 0.1vh solid rgb(202, 0, 111) ;
+       filter:drop-shadow(0 0 2vh rgb(255, 0, 128));
+       border-radius: 16%;
+       transition: 0s ease;
+       animation: ColorSettings 1.5s ease;
+        &:hover{
+            border-color: rgb(230, 0, 69) ;
+            filter:drop-shadow(0 0 4vh rgb(255, 0, 76)) ;
+        }
+      
+       button{
+          position: relative;
+          margin-top: 6%;
+          margin-bottom: 6%;
+          background-color: $PrimaryBC;
+          padding: 2%;
+          border: 0.1vh solid white;
+          font-family:Georgia, 'Times New Roman', Times, serif ;
+          color: rgb(182, 182, 182);
+          transition: 0.5s ease;
+          &:hover{
+            padding: 3%;
+            border-color:coral;
+            transform: translateY(-3%);
+          }
+       }
+    
+    }
+
+
+
+}
+@keyframes InputMenu{
+    0%{transform: translateY(80vh);
+       opacity: 0;}
+    50%{opacity: 0.5;}
+       100%{transform: translateY(10vh);
+    opacity: 1;}
+}
+
+@keyframes ColorSettings{
+    0%{transform: translateY(80vh);
+        opacity: 0;}
+     50%{opacity: 0.4;}
+        100%{transform: translateY(0vh);
+     opacity: 1;}
+
+}
+
+
+
+
+
+
+
+
+
+

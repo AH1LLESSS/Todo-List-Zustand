@@ -1,0 +1,26 @@
+@import './Mixins';
+
+*{
+    margin: 0 auto;
+    text-decoration: none;
+    text-align: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color:  white;
+    transition: 0.8s ease-in-out;
+    position: relative;
+    font-size: 0.725rem;
+
+    
+
+}
+
+body{
+    @include Background-Gradient(black, rgb(34, 34, 34), rgb(49, 49, 49));
+    margin: 0;
+    padding: 0;
+}
+
+html{
+    font-size: 16px;
+}
+
