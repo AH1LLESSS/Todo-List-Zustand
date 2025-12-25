@@ -6,7 +6,8 @@
  position: relative;
  top:10vh;
  display: block;
- width: 40%;
+ width: auto;
+ max-width: 50%;
  max-width: auto;
  height: auto ;
  @extend %Border;
@@ -77,6 +78,7 @@
      
         input{
             background-color: $INPUTBC;
+            width: 82%;
             position: relative;
             border: 0.1vh solid rgb(0, 3, 160) ;
             
@@ -194,7 +196,21 @@
         100%{transform: translateY(0vh);
      opacity: 1;}
 
+}  
+          
+          
+@media (max-width: 768px) {
+input{
+    width: auto;
+    padding: none;
 }
+}
+
+
+
+
+
+
 
 
 
