@@ -6,9 +6,9 @@
  position: relative;
  top:10vh;
  display: block;
+ min-width: 10rem;
  width: auto;
- max-width: 50%;
- max-width: auto;
+ max-width: 20rem;
  height: auto ;
  @extend %Border;
  animation: InputMenu 3s ease forwards ;
@@ -58,10 +58,11 @@
 
      .SettingsPanel{
         position: relative;
+        width: auto;
         margin-top: 1%;
         margin-bottom: 1%;
-        margin-right: 5%;
-        margin-left: 5%;
+        margin-right: 0.1rem;
+        margin-left: 0.1rem;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         button{
@@ -78,9 +79,10 @@
      
         input{
             background-color: $INPUTBC;
-            width: 82%;
+            width: auto;
             position: relative;
             border: 0.1vh solid rgb(0, 3, 160) ;
+            margin-right: 0.1rem;
             
             &:hover{
                 border-color: rgb(0, 3, 202);
@@ -95,7 +97,6 @@
 
       .InputComent{
         position: relative;
-        right: 5%;
         margin-bottom: 2%;
         background-color: #272727;
         padding: 2%;
@@ -112,7 +113,7 @@
         background-color: $PrimaryBC;
         border: 0.2vh solid rgb(85, 0, 85) ;
         padding: 2%;
-        left: 5%;
+        left: 0.2rem;
         font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
         transition: 0.4s ease;
         &:hover{
@@ -124,9 +125,11 @@
      .InputNick{
         position: relative;
         margin-bottom: 2%;
+        right: 0.2rem;
+        left: 0.1rem;
         background-color: #272727;
         padding: 2%;
-        width: 24%;
+        width: auto;
         border: 0.2vh solid rgb(0, 65, 90) ;
       
            &:hover{
@@ -137,11 +140,12 @@
 
 
     .ColorSettings{
-       position: absolute;
+       position: relative;
+       margin-top: 2rem;
        bottom: 1.5vh ;
-       right: 44vw;
        min-width: 20%;
        width: auto;
+       max-width: 6rem;
        opacity: 1;
        pointer-events: auto;
        display: flex;
@@ -200,9 +204,12 @@
           
           
 @media (max-width: 768px) {
-input{
+ *{
+    font-size: 10px;
+}
+    input{
     width: auto;
-    padding: none;
+    padding: 10px 10px;
 }
 }
 

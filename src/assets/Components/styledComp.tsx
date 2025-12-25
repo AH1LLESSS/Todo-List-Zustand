@@ -5,7 +5,6 @@ import styled from 'styled-components';
 export const Buttong =styled.button`
         position: relative;
         margin-top: 4vh;
-        margin-left:80%;
         background-color: #2c2c2c;
         border: 0.1vh solid rgb(66, 0, 0);
         padding: 0.4rem;

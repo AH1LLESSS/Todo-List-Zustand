@@ -5,6 +5,7 @@
     @include Background-Gradient(rgb(31, 31, 31), rgb(12, 12, 12),rgb(37, 0, 0));
       position: relative;
       top: 5vh;
+      min-width: 14rem;
       width: auto ;
       max-width: 38% ;
       height: auto;
